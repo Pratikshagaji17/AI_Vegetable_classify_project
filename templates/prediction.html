@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://cdn.sanity.io/images/1d6a4b2f/production/ff2a1b0807af1467fa94fa2e375c0091bc552631-850x585.png?w=850&h=585&auto=format') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(76, 175, 80, 0.9);
+      padding: 15px 25px;
+    }
+
+    .navbar .title {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    .center-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 32px;
+      color: white;
+    }
+
+    input[type="file"] {
+      padding: 12px;
+      margin-top: 25px;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
+      margin-top: 25px;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h3 {
+      margin-top: 35px;
+      font-size: 28px;
+      color: white;
+    }
+
+    h3 span {
+      font-weight: bold;
+      color: #4CAF50;
+      font-size: 30px;
+    }
+
+    #preview {
+      display: none;
+      margin-top: 20px;
+      max-width: 300px;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="title">Verdant Vision</div>
+    <div>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/prediction.html">Prediction</a>
+    </div>
+  </div>
+
+  <div class="center-wrapper">
+    <div class="content">
+      <h2>Upload an Image for Prediction</h2>
+      <form action="/prediction.html" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required><br><br>
+        <img id="preview" src="#" alt="Selected Image Preview">
+        <br>
+        <button type="submit">Submit</button>
+      </form>
+
+      {% if pred %}
+        <h3>Predicted Vegetable: <span>{{ pred }}</span></h3>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    const input = document.querySelector('input[type="file"]');
+    const preview = document.getElementById('preview');
+
+    input.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.style.display = 'block';
+          preview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+
+</body>
+</html>
